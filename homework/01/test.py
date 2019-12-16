@@ -1,0 +1,26 @@
+import subprocess
+def check(expr,result):
+    out=subprocess.run(["./calc",expr],stdout=subprocess.PIPE)
+    if out.stdout.decode('ascii')!=result:
+        print('error {0} != {1}, got {2}'.format(expr,result,out.stdout.decode('ascii')))
+check('2 + 2','4')
+check('3 / 2','1')
+check('10 * 5 * 2 * 3 + 4 * 2','308')
+check('-20 * ---20 * -4','-1600')
+check('1434314536432523','too big number')
+check('aaaaaaaa','wrong input')
+check('1234+','wrong input')
+check('2147483647','2147483647')
+check('2147483648','too big number')
+check('-2147483648','-2147483648')
+check('-2147483649','too big number')
+check('-2147483648 + 2147483647','-1')
+check('2147483647 + 2147483647','-2') # Переполнение, так как у нас в вычислениях int, то поймать сложно
+check('1 - 1 - -1 + --2','3')
+check('--3','3')
+check('2 * 2 * 2 * 2 * 2 / 4 / 4','2')
+check('2 + 2 + 3 * 5 * 4 + 2 * 2 * 2 * 2 * 2 * 2 + 1 + 3','132')
+check('2147955 + 211 * 3 + 5 / 0','division by zero')
+check('--------','there is a number missing')
+check('23 + ----- + 24','there is a number missing')
+check('23 a 123 b 12',"can't recognize the operation")
