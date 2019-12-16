@@ -16,12 +16,12 @@ class Matrix {
 	};
 	public:
 	Matrix(int rownum, int colnum);
-	std::size_t getRows();
-	std::size_t getColumns();
+	std::size_t getRows() const;
+	std::size_t getColumns() const;
 	const column operator[](int row) const;
 	column operator[](int row);
 	Matrix& operator*=(int a);
-	bool operator==(const Matrix& b);
-	bool operator!=(const Matrix& b);
+	bool operator==(const Matrix& b) const;
+	bool operator!=(const Matrix& b) const;
 	~Matrix();
 };

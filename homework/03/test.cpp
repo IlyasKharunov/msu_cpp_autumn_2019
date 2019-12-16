@@ -48,6 +48,27 @@ int main()
 
 	try 
 	{
+		cout << "lol" << endl;
+		const Matrix a(2,3) , b(1,3), c(2,3);
+		if (a == b)
+			cout << "a == b" << endl;
+		if (a != b)
+			cout << "a != b" << endl;
+
+		if (a == c)
+			cout << "a == b" << endl;
+		if (a != c)
+			cout << "a != b" << endl;
+	}
+	catch (out_of_range) {
+		cout << "out of range" << endl;
+	}
+	catch (...) {
+		cout << "unknown error" << endl;
+	}
+
+	try 
+	{
 		for(int i = 0;i<a.getRows();i++) {
 			for(int j = 0;j<a.getColumns();j++)
 				a[i][j] = 10;

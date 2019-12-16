@@ -28,11 +28,11 @@ int& Matrix::column::operator[](int columnum) {
 	return e->matrix[base*width + columnum];
 }
 
-std::size_t Matrix::getRows() {
+std::size_t Matrix::getRows() const {
 	return rows;
 }
 
-std::size_t Matrix::getColumns() {
+std::size_t Matrix::getColumns() const {
 	return cols;
 }
 
@@ -54,7 +54,7 @@ Matrix& Matrix::operator*=(int a) {
 	return *this;
 }
 
-bool Matrix::operator==(const Matrix& b) {
+bool Matrix::operator==(const Matrix& b) const {
 	if (cols != b.cols or rows != b.rows)
 		return false;
 	for (int i = 0; i<rows*cols;i++) {
@@ -64,7 +64,7 @@ bool Matrix::operator==(const Matrix& b) {
 	return true;
 }
 
-bool Matrix::operator!=(const Matrix& b) {
+bool Matrix::operator!=(const Matrix& b) const {
 	if (cols != b.cols or rows != b.rows)
 		return true;
 	for (int i = 0; i<rows*cols;i++) {
