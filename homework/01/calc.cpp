@@ -3,12 +3,12 @@
 
 using namespace std;
 
-int add(string& str, int& pos, int sum, int mul, int& error);
-int mult(string& str, int& pos, int sum, int mul, int& error);
-int div(string& str, int& pos, int sum, int mul, int& error);
-int sub(string& str, int& pos, int sum, int mul, int& error);
+int add(const string&str, int& pos, int sum, int mul, int& error);
+int mult(const string&str, int& pos, int sum, int mul, int& error);
+int div(const string&str, int& pos, int sum, int mul, int& error);
+int sub(const string&str, int& pos, int sum, int mul, int& error);
 
-int toint(string& str, int& pos, int & error) {
+int toint(const string&str, int& pos, int & error) {
 	int flag = 0;
 	string numax = to_string(numeric_limits<int>::max());
 	string numin = to_string(numeric_limits<int>::min());
@@ -51,7 +51,7 @@ int toint(string& str, int& pos, int & error) {
 	return num;
 }
 
-int mult(string& str,int& pos,int sum,int mul, int& error) {
+int mult(const string&str,int& pos,int sum,int mul, int& error) {
 	int a = toint(str,pos, error);
 	if (error != 0) {
 		return -1;
@@ -104,7 +104,7 @@ int mult(string& str,int& pos,int sum,int mul, int& error) {
 	error = 2;
 	return -1;
 }
-int add(string& str,int& pos,int sum,int mul, int& error) {
+int add(const string&str,int& pos,int sum,int mul, int& error) {
 	int a = toint(str,pos, error);
 	if (error != 0) {
 		return -1;
@@ -157,7 +157,7 @@ int add(string& str,int& pos,int sum,int mul, int& error) {
 	error = 2;
 	return -1;
 }
-int sub(string& str,int& pos,int sum,int mul, int & error) {
+int sub(const string&str,int& pos,int sum,int mul, int & error) {
 	int a = toint(str,pos, error);
 	if (error != 0) {
 		return -1;
@@ -210,7 +210,7 @@ int sub(string& str,int& pos,int sum,int mul, int & error) {
 	error = 2;
 	return -1;
 }
-int div(string& str,int& pos,int sum,int mul, int& error) {
+int div(const string&str,int& pos,int sum,int mul, int& error) {
 	int a = toint(str,pos, error);
 	if (error != 0) {
 		return -1;
@@ -267,7 +267,7 @@ int div(string& str,int& pos,int sum,int mul, int& error) {
 	error = 2;
 	return -1;
 }
-int start(string& str, int& error) {
+int start(const string&str, int& error) {
 	int pos = 0;
 	int a = toint(str,pos, error);
 	if (error != 0)
