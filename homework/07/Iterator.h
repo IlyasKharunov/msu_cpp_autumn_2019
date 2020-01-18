@@ -3,112 +3,66 @@ template <class T>
 class Iterator {
 	T* ptr_;
 public:
-	explicit Iterator(T* ptr) : ptr_(ptr) {}
+	explicit Iterator(T* ptr);
 
-	bool operator==(const Iterator<T>& other) const {
-		return ptr_ == other.ptr_;
-	}
+	bool operator==(const Iterator<T>& other) const;
 
-	bool operator!=(const Iterator<T>& other) const {
-		return !(*this == other);
-	}
+	bool operator!=(const Iterator<T>& other) const;
 
-	T& operator*() const {
-		return *ptr_;
-	}
+	T& operator*() const;
 
-	Iterator& operator++() {
-		++ptr_;
-		return *this;
-	}
+	Iterator& operator++();
 
-	Iterator& operator--() {
-		--ptr_;
-		return *this;
-	}
+	Iterator& operator--();
 
-	Iterator operator+(int offset) const {
-		return Iterator(ptr_ + offset);
-	}
+	Iterator operator+(int offset) const;
 
-	Iterator operator-(int offset) const {
-		return Iterator(ptr_ - offset);
-	}
+	Iterator operator-(int offset) const;
 
-	int operator-(const Iterator<T>& it) const {
-		return ptr_ - it.ptr_;
-	}
+	int operator-(const Iterator<T>& it) const;
 
 };
 
 template<class T>
-Iterator<T> operator+(int offset, const Iterator<T>& it) {
-	return it + offset;
-}
+Iterator<T> operator+(int offset, const Iterator<T>& it);
 
 template <class T>
 class rIterator {
 	T* ptr_;
 public:
-	explicit rIterator(T* ptr) : ptr_(ptr) {}
+	explicit rIterator(T* ptr);
 
-	bool operator==(const rIterator<T>& other) const {
-		return ptr_ == other.ptr_;
-	}
+	bool operator==(const rIterator<T>& other) const;
 
-	bool operator!=(const rIterator<T>& other) const {
-		return !(*this == other);
-	}
+	bool operator!=(const rIterator<T>& other) const;
 
-	T& operator*() const {
-		return *ptr_;
-	}
+	T& operator*() const;
 
-	rIterator& operator++() {
-		--ptr_;
-		return *this;
-	}
+	rIterator& operator++();
 
-	rIterator& operator--() {
-		++ptr_;
-		return *this;
-	}
+	rIterator& operator--();
 
-	rIterator operator+(int offset) const {
-		return rIterator(ptr_ - offset);
-	}
+	rIterator operator+(int offset) const;
 
-	rIterator operator-(int offset) const {
-		return rIterator(ptr_ + offset);
-	}
+	rIterator operator-(int offset) const;
 
-	int operator-(const rIterator<T>& it) const {
-		return ptr_ + it.ptr_;
-	}
+	int operator-(const rIterator<T>& it) const;
 
 };
 
 template<class T>
-rIterator<T> operator+(int offset, const rIterator<T>& it) {
-	return it - offset;
-}
+rIterator<T> operator+(int offset, const rIterator<T>& it);
 
 template<class T>
-bool operator==(const Iterator<T>& it, const rIterator<T>& rit) {
-	return it.ptr_ == rit.ptr_;
-}
+bool operator==(const Iterator<T>& it, const rIterator<T>& rit);
 
 template<class T>
-bool operator==(const rIterator<T>& rit, const Iterator<T>& it) {
-	return it.ptr_ == rit.ptr_;
-}
+bool operator==(const rIterator<T>& rit, const Iterator<T>& it);
 
 template<class T>
-bool operator!=(const Iterator<T>& it, const rIterator<T>& rit) {
-	return it.ptr_ != rit.ptr_;
-}
+bool operator!=(const Iterator<T>& it, const rIterator<T>& rit);
 
 template<class T>
-bool operator!=(const rIterator<T>& rit, const Iterator<T>& it) {
-	return it.ptr_ != rit.ptr_;
-}
+bool operator!=(const rIterator<T>& rit, const Iterator<T>& it);
+
+#include "Iterator.tpp"

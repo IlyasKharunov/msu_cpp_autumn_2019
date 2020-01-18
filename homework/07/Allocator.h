@@ -18,32 +18,18 @@ public:
 	Allocator()  = default;
 	~Allocator()  = default;
 
-	pointer address(reference x) const {
-		return &x;
-	}
-	const_pointer address(const_reference x) const {
-		return &x;
-	}
+	pointer address(reference x) const;
+	const_pointer address(const_reference x) const;
 
-	pointer allocate(size_type n) {
-		pointer p= (pointer)malloc(n * sizeof(value_type));
-		if (p == nullptr) throw std::bad_alloc();
-		return p;
-	}
+	pointer allocate(size_type n);
 
-	void deallocate(pointer p, size_type n = 0) {
-		free(p);
-	}
+	void deallocate(pointer p, size_type n = 0);
 
-	size_type max_size() const noexcept {
-		return std::numeric_limits<size_type>::max();
-	}
+	size_type max_size() const noexcept;
 
-	void construct(pointer p, const_reference val) {
-		new(p) T(val);
-	}
+	void construct(pointer p, const_reference val);
 
-	void destroy(pointer p) {
-		p->~T();
-	}
+	void destroy(pointer p);
 };
+
+#include "Allocator.tpp"
