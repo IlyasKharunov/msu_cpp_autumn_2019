@@ -10,30 +10,10 @@
 #include<queue>
 #include"sort.h"
 
-void sort_func(std::mutex& read, std::mutex& write, std::ifstream& input_file, std::ofstream& tmp_file, size_t memory_size) {
-		std::unique_ptr<uint64_t[]> a(new uint64_t[memory_size / sizeof(uint64_t)]);
-		while (true) {
-			size_t read_count;
-			{
-				std::unique_lock<std::mutex> lock_read(read);
-				input_file.read((char*)a.get(), memory_size);
-				read_count = input_file.gcount();
-			}
-
-			if (read_count == 0) 
-				break;
-			std::sort(a.get(), a.get() + read_count / sizeof(uint64_t));
-
-			{
-				std::unique_lock<std::mutex> lock_write(write);
-				tmp_file.write((char*)&read_count, sizeof(size_t));
-				tmp_file.write((char*)a.get(), read_count);
-			}
-		}
-};
-
 void sort_file(const std::string input_path, const std::string output_path, const std::string tmp_path, size_t num_threads){
+
 	const size_t memory_size = 3145728;//3 mb
+	std::mutex read, write;
 
 	std::ifstream input_file(input_path, std::ios::binary);
 
@@ -49,12 +29,28 @@ void sort_file(const std::string input_path, const std::string output_path, cons
 
 	if (!tmp_file)
 		throw(std::runtime_error("Can't open tmp file\n"));
-	
 
-	std::mutex read, write;
+	static auto sort_func = [memory_size](std::mutex& read, std::mutex& write,
+		std::ifstream& in_file, std::ofstream& tmp_file) {
+
+			std::unique_ptr<uint64_t[]> a(new uint64_t[memory_size / sizeof(uint64_t)]);
+			while (true) {
+				std::unique_lock<std::mutex> lock_read(read);
+				in_file.read((char*)a.get(), memory_size);
+				size_t read_count = in_file.gcount();
+				lock_read.unlock();
+
+				if (read_count == 0) break;
+				std::sort(a.get(), a.get() + read_count / sizeof(uint64_t));
+
+				std::unique_lock<std::mutex> lock_write(write);
+				tmp_file.write((char*)&read_count, sizeof(size_t));
+				tmp_file.write((char*)a.get(), read_count);
+			}
+	};
 
 	std::vector<std::thread> threads(num_threads);
-	auto thread_sort = std::bind(sort_func, std::ref(read), std::ref(write), std::ref(input_file), std::ref(tmp_file), memory_size);
+	auto thread_sort = std::bind(sort_func, std::ref(read), std::ref(write), std::ref(input_file), std::ref(tmp_file));
 	for (int i = 0; i < num_threads; ++i) {
 	 	threads[i] = std::thread(thread_sort);
 	}
