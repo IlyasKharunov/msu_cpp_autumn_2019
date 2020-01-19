@@ -10,15 +10,6 @@
 #include<queue>
 #include"sort.h"
 
-
-Small::Small(uint64_t val_, uint64_t pos_, uint64_t max_)  //Содержит минимальный элемент сортированного массива, указатель на остальные и размер
-	: val(val_), pos(pos_), max(max_) 
-{
-}
-bool Small::operator>(const Small& A) const {
-	return val > A.val;
-}
-
 void sort_func(std::mutex& read, std::mutex& write, std::ifstream& input_file, std::ofstream& tmp_file, size_t memory_size) {
 		std::unique_ptr<uint64_t[]> a(new uint64_t[memory_size / sizeof(uint64_t)]);
 		while (true) {
@@ -41,8 +32,8 @@ void sort_func(std::mutex& read, std::mutex& write, std::ifstream& input_file, s
 		}
 };
 
-void sort_file(const char* input_path, const char* output_path, const char* tmp_path, size_t num_threads){
-	const size_t memory_size = 4194304;//4 mb
+void sort_file(const std::string input_path, const std::string output_path, const std::string tmp_path, size_t num_threads){
+	const size_t memory_size = 3145728;//3 mb
 
 	std::ifstream input_file(input_path, std::ios::binary);
 
@@ -78,6 +69,20 @@ void sort_file(const char* input_path, const char* output_path, const char* tmp_
 	if (!input_file) 
 		throw(std::runtime_error("Can't open tmp file\n"));
 	
+	struct Small { //Содержит минимальный элемент сортированного массива, указатель на остальные и размер
+	uint64_t val, pos, max;
+
+	Small(uint64_t val_, uint64_t pos_, uint64_t max_)  //Содержит минимальный элемент сортированного массива, указатель на остальные и размер
+	: val(val_), pos(pos_), max(max_) 
+	{
+	}
+
+	bool operator>(const Small& A) const {
+		return val > A.val;
+	}
+
+	};
+
 	std::priority_queue<Small, std::vector<Small>, std::greater<Small>> que;
 
 	size_t i = 0;
