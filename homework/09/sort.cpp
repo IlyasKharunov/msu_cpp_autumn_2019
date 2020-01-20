@@ -10,7 +10,7 @@
 #include<queue>
 #include"sort.h"
 
-void sort_file(const std::string input_path, const std::string output_path, const std::string tmp_path, size_t num_threads){
+void sort_file(const std::string && input_path, const std::string && output_path, const std::string && tmp_path, size_t num_threads){
 
 	const size_t memory_size = 3145728;//3 mb
 	std::mutex read, write;
@@ -66,17 +66,16 @@ void sort_file(const std::string input_path, const std::string output_path, cons
 		throw(std::runtime_error("Can't open tmp file\n"));
 	
 	struct Small { //Содержит минимальный элемент сортированного массива, указатель на остальные и размер
-	uint64_t val, pos, max;
+		uint64_t val, pos, max;
 
-	Small(uint64_t val_, uint64_t pos_, uint64_t max_)  //Содержит минимальный элемент сортированного массива, указатель на остальные и размер
-	: val(val_), pos(pos_), max(max_) 
-	{
-	}
+		Small(uint64_t val_, uint64_t pos_, uint64_t max_)
+			: val(val_), pos(pos_), max(max_) 
+			{
+			}
 
-	bool operator>(const Small& A) const {
-		return val > A.val;
-	}
-
+		bool operator>(const Small& A) const {
+			return val > A.val;
+		}
 	};
 
 	std::priority_queue<Small, std::vector<Small>, std::greater<Small>> que;
@@ -113,4 +112,8 @@ void sort_file(const std::string input_path, const std::string output_path, cons
 		input_file.read((char*)&tmp, sizeof(uint64_t));
 		que.emplace(Small( tmp,smallest_pos + sizeof(uint64_t),smallest_max ));
 	}
+}
+
+void sort_file(const char* input_path, const char* output_path, const char* tmp_path, size_t num_threads){
+	sort_file(std::string(input_path), std::string(output_path), std::string(tmp_path), num_threads);
 }
