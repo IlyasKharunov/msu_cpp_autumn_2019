@@ -1,4 +1,5 @@
 #include"format.h"
+#include"format.cpp"
 #include<cassert>
 
 using namespace std;
