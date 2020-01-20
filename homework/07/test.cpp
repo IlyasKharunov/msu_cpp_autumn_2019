@@ -6,9 +6,25 @@ using namespace std;
 
 
 int main() {
+	Vector<string> b;
+	assert(b.size() == 0);
+	assert(b.empty() == 1);
+	b.push_back("string");
+	assert(b.empty() == 0);
+	assert(b.size() == 1);
+	for (int i = 0; i < 10; i++) b.push_back("aa");
+	for (int i = 0; i < 100; i++) b.push_back("aaaabbbb");
+	assert(b.size() == 111);
+	for (int i = 0; i < 5; i++) b.pop_back();
+	for (int i = 0; i < 5; i++) b.push_back("a");
+	assert(b.size() == 111);
+	for (auto i = b.rbegin(); i != b.rend(); ++i) cout << *i << ' ';
+	cout << "\n--------------------------------------\n";
+
 	Vector<int> a(3,666);
 	for (int i = 0; i < 10; i++) a.push_back(i);
 	for (auto i : a) cout << i << ' ';
+	cout << a.size() << endl;
 	cout << "\n--------------------------------------\n";
 	for (auto i = a.rbegin(); i != a.rend(); ++i) cout << *i << ' ';
 	cout << "\n\n";
@@ -50,13 +66,6 @@ int main() {
 	for (auto i = a.rbegin(); i != a.rend(); ++i) cout << *i << ' ';
 	cout << "\n\n";
 	assert(a.size() == 0);
-
-	Vector<string> b;
-	assert(b.size() == 0);
-	assert(b.empty() == 1);
-	b.push_back("string");
-	assert(b.empty() == 0);
-	assert(b.size() == 1);
 
 	b.reserve(100);
 	assert(b.size() == 1);
