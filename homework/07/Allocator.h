@@ -45,7 +45,7 @@ public:
 	}
 
 	void construct(pointer p, rvalue_reference val) {
-		new(p) T(val);
+		new(p) T(std::move(val));
 	}
 
 	void destroy(pointer p) {

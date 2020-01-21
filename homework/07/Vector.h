@@ -77,7 +77,7 @@ public:
 			std::swap(data_, newData);
 			alloc_.deallocate(newData);
 		}
-		alloc_.construct(data_ + size_, value);
+		alloc_.construct(data_ + size_, std::move(value));
 		size_++;
 	}
 

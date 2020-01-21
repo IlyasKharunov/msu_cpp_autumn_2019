@@ -7,7 +7,8 @@ using namespace std;
 
 int main() {
 	Vector<Vector<int>> v;
-	v.push_back(Vector<int>(2,3));
+	Vector<int> l(2, 3);
+	v.push_back(l);
 	v.push_back(Vector<int>(2,3));
 	assert(v.size() == 2);
 	assert(v.empty() == 0);
