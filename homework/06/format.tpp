@@ -5,10 +5,6 @@
 #include<limits>
 #include<vector>
 
-bool can_stream(...) {
-	return false;
-}
-
 template<class T>
 bool can_stream(std::string& s, T&& t, typename decltype(std::cout << t)* = nullptr) {
 	std::stringstream tmp_stream;
