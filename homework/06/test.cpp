@@ -1,5 +1,5 @@
 #include"format.h"
-#include"format.cpp"
+#include"format.tpp"
 #include<cassert>
 
 using namespace std;
