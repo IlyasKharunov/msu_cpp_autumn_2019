@@ -1,3 +1,6 @@
+#ifndef FORMAT_H
+#define FORMAT_H
+
 #include<string>
 #include<iostream>
 #include<sstream>
@@ -18,3 +21,5 @@ void parse_args(std::vector<std::string>& args, T &&a, ArgsT&& ...arg);
 
 template<class... ArgsT>
 std::string format(const std::string& s, ArgsT&&... arg);
+
+#endif
