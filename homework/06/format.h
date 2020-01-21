@@ -9,7 +9,7 @@
 bool can_stream(...);
 
 template<class T>
-bool can_stream(std::string& s, T&& t);
+bool can_stream(std::string& s, T&& t, typename decltype(std::cout << t)* = nullptr);
 
 void parse_args(std::vector<std::string>& args);
 
